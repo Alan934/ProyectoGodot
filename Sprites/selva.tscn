@@ -1,0 +1,75 @@
+[gd_scene load_steps=9 format=3 uid="uid://ct5l2q57ggjgu"]
+
+[ext_resource type="Texture2D" uid="uid://bx582emen63cv" path="res://Sprites/selva.jpeg" id="1_0t3ye"]
+[ext_resource type="Script" path="res://Sprites/pajarito.gd" id="2_i8oy3"]
+[ext_resource type="Texture2D" uid="uid://j5s03nl6160i" path="res://Sprites/Pajaro.png" id="3_oaipl"]
+[ext_resource type="Script" path="res://Sprites/CollisionShapeSuelo.gd" id="4_g6iji"]
+[ext_resource type="PackedScene" uid="uid://cx476obg57ypy" path="res://tuberias.tscn" id="5_pg4s7"]
+[ext_resource type="Script" path="res://Sprites/InstanceadorDeTuberias.gd" id="7_4nvru"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2ptwl"]
+radius = 31.0161
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cncwu"]
+size = Vector2(1147.5, 20)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Selva" type="Sprite2D" parent="."]
+position = Vector2(577, 321)
+scale = Vector2(1.12695, 0.636719)
+texture = ExtResource("1_0t3ye")
+
+[node name="pajarito" type="RigidBody2D" parent="."]
+script = ExtResource("2_i8oy3")
+
+[node name="Pajaro" type="Sprite2D" parent="pajarito"]
+position = Vector2(116.125, 214.875)
+scale = Vector2(0.248645, 0.25361)
+texture = ExtResource("3_oaipl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pajarito"]
+position = Vector2(126, 214)
+shape = SubResource("CircleShape2D_2ptwl")
+
+[node name="Suelo" type="StaticBody2D" parent="."]
+position = Vector2(238, 542)
+
+[node name="CollisionShapeSuelo" type="CollisionShape2D" parent="Suelo"]
+position = Vector2(337.25, 94)
+shape = SubResource("RectangleShape2D_cncwu")
+script = ExtResource("4_g6iji")
+
+[node name="InstanceadorDeTuberias" type="Node2D" parent="."]
+position = Vector2(1044, 289)
+script = ExtResource("7_4nvru")
+
+[node name="tuberias" type="Node2D" parent="InstanceadorDeTuberias"]
+position = Vector2(-18, -17)
+
+[node name="Tuberias" parent="InstanceadorDeTuberias/tuberias" instance=ExtResource("5_pg4s7")]
+position = Vector2(-1044, -289)
+
+[node name="Tuberias2" parent="InstanceadorDeTuberias/tuberias" instance=ExtResource("5_pg4s7")]
+position = Vector2(-714, -276)
+
+[node name="Tuberias3" parent="InstanceadorDeTuberias/tuberias" instance=ExtResource("5_pg4s7")]
+position = Vector2(-381, -279)
+
+[node name="Tuberias4" parent="InstanceadorDeTuberias/tuberias" instance=ExtResource("5_pg4s7")]
+position = Vector2(-38, -292)
+
+[node name="Tuberias5" parent="InstanceadorDeTuberias/tuberias" instance=ExtResource("5_pg4s7")]
+position = Vector2(329, -260)
+
+[node name="AbajoSpawn" type="Marker2D" parent="InstanceadorDeTuberias"]
+position = Vector2(62, -68)
+
+[node name="ArribaSpawn" type="Marker2D" parent="InstanceadorDeTuberias"]
+position = Vector2(58, -255)
+
+[node name="Timer" type="Timer" parent="InstanceadorDeTuberias"]
+wait_time = 1.5
+autostart = true
+
+[connection signal="timeout" from="InstanceadorDeTuberias/Timer" to="InstanceadorDeTuberias" method="_on_timer_timeout"]
